@@ -40,5 +40,22 @@ public class PlayerAnimCurEditor : Editor
         serializedObject.ApplyModifiedProperties();//最后记得调一下这个方法才能保存序列化结果
     }
     
+    private void OnSceneGUI()
+    {
+        Handles.Label(playerAnimationCurve.transform.position + Vector3.up, playerAnimationCurve.transform.name+":"+playerAnimationCurve.transform.position.ToString());
+        
+        Handles.BeginGUI();
+        GUILayout.BeginArea(new Rect(200, 200, 300, 100));
+        
+        if(GUILayout.Button("Reset"))
+        {
+            playerAnimationCurve.transform.position = Vector3.zero;
+            playerAnimationCurve.transform.rotation = Quaternion.identity;
+            playerAnimationCurve.transform.localScale = Vector3.one;
+        }
+        GUILayout.Label("Object have animation curve");
+        GUILayout.EndArea();
+        Handles.EndGUI();
+    }
     
 }
