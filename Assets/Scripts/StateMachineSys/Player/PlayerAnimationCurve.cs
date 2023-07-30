@@ -9,12 +9,14 @@ namespace Controller
     public class PlayerAnimationCurve : MonoBehaviour
     {
         #region Curves
-        [SerializeField] private AnimationCurve _speedCurve;
-        [SerializeField] private AnimationCurve _speedDownCurve;
+
+        public AnimationCurve _speedCurve;
+        public AnimationCurve _speedDownCurve;
         [SerializeField] private AnimationCurve _roundCurve;
 
-        [SerializeField] private float speedUpTotalTime=1f;
-        [SerializeField] private float speedDownTotalTime=1f;
+        public float speedUpTotalTime=1f;
+        public float speedDownTotalTime=1f;
+        
         private float _timer;
         private float _normalizeTime;
         #endregion
@@ -23,7 +25,9 @@ namespace Controller
         public float maxSpeed = 5f;
         private float _roundSpeed;
 
+        [HideInInspector]
         public bool isChangingSpeed;
+        [HideInInspector]
         public bool isAccelerating=false;
         //public bool isDecelerating;
         Coroutine myCouroutine;

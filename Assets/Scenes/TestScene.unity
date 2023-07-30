@@ -314,49 +314,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speedCurve:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0.004254087
-      value: -0.019927874
-      inSlope: 8.277049
-      outSlope: 8.277049
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.033333343
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 8.304646
-      outSlope: 8.304646
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.03749999
-      outWeight: 0
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   _speedDownCurve:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -0.0083351135
-      value: 1.0087585
-      inSlope: -5.819535
-      outSlope: -5.819535
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.0625
-    - serializedVersion: 3
-      time: 1
-      value: -0.0016822815
-      inSlope: -3.0463068
-      outSlope: -3.0463068
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.04193271
-      outWeight: 0
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -366,7 +330,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  totalTime: 1
+  speedUpTotalTime: 1
   speedDownTotalTime: 1
   maxSpeed: 5
   isChangingSpeed: 0
