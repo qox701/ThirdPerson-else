@@ -14,7 +14,7 @@ public class PlayerAnimCurEditor : Editor
     private float maxSpeed;
     private float speedUpTotalTime;
     private float speedDownTotalTime;
-    private void OnEnable()
+    private void OnValidate()
     {
         playerAnimationCurve = (PlayerAnimationCurve)target;
         speedCurve=playerAnimationCurve._speedCurve;
@@ -45,7 +45,7 @@ public class PlayerAnimCurEditor : Editor
         Handles.Label(playerAnimationCurve.transform.position + Vector3.up, playerAnimationCurve.transform.name+":"+playerAnimationCurve.transform.position.ToString());
         
         Handles.BeginGUI();
-        GUILayout.BeginArea(new Rect(200, 200, 300, 100));
+        GUILayout.BeginArea(new Rect(200, 200, 200, 150));
         
         if(GUILayout.Button("Reset"))
         {

@@ -32,6 +32,7 @@ namespace Controller
 
         public float MaxSpeed = 5f;
         public Vector3 MoveDir { get; private set; }
+        public Vector3 LookDir { get; private set; }
         public Vector3 Velocity=> Rigidbody.velocity;
         
         #endregion
@@ -51,7 +52,7 @@ namespace Controller
             StateMachine.Initialize();
 
             MoveStick.performed += OnMove;
-            
+            LookStick.performed += OnLook;
             
             StateMachine.TransitTo("Move");
         }
@@ -59,6 +60,8 @@ namespace Controller
         void OnDisable()
         {
             StateMachine.Disable();
+            MoveStick.performed -= OnMove;
+            LookStick.performed -= OnLook;
         }
 
         private void FixedUpdate()
@@ -81,6 +84,11 @@ namespace Controller
             MoveDir = MoveDir.normalized;
         }
         
+        private void OnLook(InputAction.CallbackContext context)
+        {
+            LookDir = new Vector3(context.ReadValue<Vector2>().x,0, context.ReadValue<Vector2>().y);
+            LookDir= LookDir.normalized;
+        }
 
         #endregion
     }
