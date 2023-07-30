@@ -10,20 +10,24 @@ namespace Controller
     {
         #region Curves
         [SerializeField] private AnimationCurve _speedCurve;
+        [SerializeField] private AnimationCurve _speedDownCurve;
         [SerializeField] private AnimationCurve _roundCurve;
 
-        [SerializeField] private float totalTime=1f;
+        [SerializeField] private float speedUpTotalTime=1f;
+        [SerializeField] private float speedDownTotalTime=1f;
         private float _timer;
         private float _normalizeTime;
         #endregion
         
         public float Speed { get; private set; }
+        public float maxSpeed = 5f;
         private float _roundSpeed;
 
         public bool isChangingSpeed;
+        public bool isAccelerating=false;
+        //public bool isDecelerating;
         Coroutine myCouroutine;
         
-        //public PlayerController _playerController;
 
         private void OnEnable()
         {
@@ -32,28 +36,40 @@ namespace Controller
 
         private void Update()
         {
-            //_playerController.speed = Speed;
             if (isChangingSpeed)
             {
                 //Debug.Log(Speed);
-                if (myCouroutine!=null)
+                if (isAccelerating)
                 {
                     return;
                 }
                 else
                 {
+                    isAccelerating = true;
+                    if (myCouroutine!=null)
+                    {
+                        StopCoroutine(myCouroutine);
+                    }
+                    _timer = 0;
+                    //ChangeStartSpeed();
                     myCouroutine = StartCoroutine(ChangeSpeed());
                 }
             }
             else
             {
-                Speed = 0f;
-                
-                if (myCouroutine!=null)
+                if (!isAccelerating)
                 {
-                    StopCoroutine(myCouroutine);
-                    
-                    myCouroutine = null;
+                    return;
+                }
+                else
+                {
+                    isAccelerating = false;
+                    if (myCouroutine!=null)
+                    {
+                        StopCoroutine(myCouroutine);
+                    }
+                    _timer = 0;
+                    myCouroutine = StartCoroutine(ChangeSpeedDown());
                 }
             }
         }
@@ -62,27 +78,27 @@ namespace Controller
         private IEnumerator ChangeSpeed()
         {
             _timer = 0;
-            while (_timer <= totalTime)
+            while (_timer <= speedUpTotalTime)
             {
-                _normalizeTime= _timer / totalTime;
+                _normalizeTime= _timer / speedUpTotalTime;
                 _timer+= Time.deltaTime;
-                Speed= _speedCurve.Evaluate(_normalizeTime) ;
+                Speed= _speedCurve.Evaluate(_normalizeTime)*maxSpeed ;
                 
                 yield return null;
             }
         }
         
-        private IEnumerator ChangeRoundSpeed()
+        private IEnumerator ChangeSpeedDown()
         {
-            _timer = 0;
-            while (_timer <= totalTime)
+            while (_timer <= speedDownTotalTime)
             {
-                _normalizeTime= _timer / totalTime;
+                _normalizeTime= _timer / speedDownTotalTime;
                 _timer+= Time.deltaTime;
-                _roundSpeed= _roundCurve.Evaluate(_normalizeTime)* 100;
+                Speed= _speedDownCurve.Evaluate(_normalizeTime)*maxSpeed;
                 yield return null;
             }
         }
+        
         #endregion
     }
 }
