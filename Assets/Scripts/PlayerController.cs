@@ -32,7 +32,7 @@ namespace Controller
 
         public float MaxSpeed = 5f;
         public Vector3 MoveDir { get; private set; }
-        public Vector3 LookDir { get; private set; }
+        public float LookDirValue { get; private set; }
         public Vector3 Velocity=> Rigidbody.velocity;
         
         #endregion
@@ -40,6 +40,8 @@ namespace Controller
         #region MonoBehaviours
         void OnEnable()
         {
+            Cursor.visible = false;
+            
             PlayerInput = GetComponent<PlayerInput>();
             Rigidbody= GetComponent<Rigidbody>();
             PlayerAnimationCurve = GetComponent<PlayerAnimationCurve>();
@@ -53,7 +55,7 @@ namespace Controller
 
             MoveStick.performed += OnMove;
             LookStick.performed += OnLook;
-            
+
             StateMachine.TransitTo("Move");
         }
         
@@ -80,14 +82,22 @@ namespace Controller
         #region Input Handling
         private void OnMove(InputAction.CallbackContext context)
         {
-            MoveDir = new Vector3(context.ReadValue<Vector2>().x,0, context.ReadValue<Vector2>().y);
+            //Get Move Direction Input when MoveStick is performed
+            MoveDir=transform.forward*MoveStick.ReadValue<Vector2>().y+transform.right*MoveStick.ReadValue<Vector2>().x;
             MoveDir = MoveDir.normalized;
         }
         
         private void OnLook(InputAction.CallbackContext context)
         {
-            LookDir = new Vector3(context.ReadValue<Vector2>().x,0, context.ReadValue<Vector2>().y);
-            LookDir= LookDir.normalized;
+            //Get the Look Direction Input when LookStick is performed
+            LookDirValue = LookStick.ReadValue<Vector2>().x;
+            
+            //Refresh MoveDir when LookStick is performed
+            //If you dont refresh MoveDir, the player will move in the direction of the last MoveStick input
+            //Which is usually performed frames before
+            MoveDir=transform.forward*MoveStick.ReadValue<Vector2>().y+transform.right*MoveStick.ReadValue<Vector2>().x;
+            MoveDir = MoveDir.normalized;
+            
         }
 
         #endregion

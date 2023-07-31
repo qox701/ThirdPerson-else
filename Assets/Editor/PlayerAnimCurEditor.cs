@@ -14,7 +14,7 @@ public class PlayerAnimCurEditor : Editor
     private float maxSpeed;
     private float speedUpTotalTime;
     private float speedDownTotalTime;
-    private void OnValidate()
+    private void OnEnable()
     {
         playerAnimationCurve = (PlayerAnimationCurve)target;
         speedCurve=playerAnimationCurve._speedCurve;

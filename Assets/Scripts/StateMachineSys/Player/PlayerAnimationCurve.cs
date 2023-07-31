@@ -12,8 +12,7 @@ namespace Controller
 
         public AnimationCurve _speedCurve;
         public AnimationCurve _speedDownCurve;
-        [SerializeField] private AnimationCurve _roundCurve;
-
+        
         public float speedUpTotalTime=1f;
         public float speedDownTotalTime=1f;
         
@@ -23,7 +22,7 @@ namespace Controller
         
         public float Speed { get; private set; }
         public float maxSpeed = 5f;
-        private float _roundSpeed;
+        public float RotateSpeed=10f;
 
         [HideInInspector]
         public bool isChangingSpeed;

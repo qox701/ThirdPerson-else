@@ -12,6 +12,9 @@ namespace Controller
         private readonly PlayerController _controller;
         private readonly PlayerAnimationCurve _animationCurve;
         private Vector3 _moveDirection;
+        private float _lookDirectionValue;
+        private float _rotateSpeed;
+        
         public float _speed=0f;
         public Player_Move(PlayerStateMachine stateMachine)
         {
@@ -23,15 +26,26 @@ namespace Controller
         public void Enter()
         {
             AddInoutCallbacks();
+            
         }
         public void Update(){}
 
         public void FixedUpdate()
         {
+            //Get Value every frame cuz it changes every frame
             _speed = _animationCurve.Speed;
+            _rotateSpeed = _animationCurve.RotateSpeed;
+            //Get direction every fixed frame
             _moveDirection = _controller.MoveDir;
+            _lookDirectionValue = _controller.LookDirValue;
+            
+            //Move
             _controller.Rigidbody.AddForce(_moveDirection,ForceMode.Acceleration);
+            
             _controller.Rigidbody.velocity= _moveDirection.normalized*_speed;
+            
+            //Rotate
+            _controller.transform.Rotate(_controller.transform.up,_lookDirectionValue*Time.deltaTime*_rotateSpeed,Space.Self);
         }
 
         public void Exit()
