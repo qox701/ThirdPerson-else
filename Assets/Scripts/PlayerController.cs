@@ -25,7 +25,7 @@ namespace Controller
         #region InputActions
         public InputAction MoveStick { get;private set; }
         private InputAction LookStick { get; set; }
-        public InputAction FireButton { get; private set; }
+        public InputAction AtkButton { get; private set; }
         #endregion
         
         #region Movement
@@ -48,7 +48,7 @@ namespace Controller
             
             MoveStick = PlayerInput.actions["Move"];
             LookStick = PlayerInput.actions["Look"];
-            FireButton = PlayerInput.actions["Fire"];
+            AtkButton = PlayerInput.actions["Fire"];
             
             StateMachine = new PlayerStateMachine(this);
             StateMachine.Initialize();
@@ -80,14 +80,13 @@ namespace Controller
         
 
         #region Input Handling
-        private void OnMove(InputAction.CallbackContext context)
+        private void OnMove(InputAction.CallbackContext MoveStick)
         {
             //Get Move Direction Input when MoveStick is performed
-            MoveDir=transform.forward*MoveStick.ReadValue<Vector2>().y+transform.right*MoveStick.ReadValue<Vector2>().x;
-            MoveDir = MoveDir.normalized;
+            GetMoveDirection();
         }
         
-        private void OnLook(InputAction.CallbackContext context)
+        private void OnLook(InputAction.CallbackContext LookStick)
         {
             //Get the Look Direction Input when LookStick is performed
             LookDirValue = LookStick.ReadValue<Vector2>().x;
@@ -95,9 +94,13 @@ namespace Controller
             //Refresh MoveDir when LookStick is performed
             //If you dont refresh MoveDir, the player will move in the direction of the last MoveStick input
             //Which is usually performed frames before
+            GetMoveDirection();
+        }
+
+        private void GetMoveDirection()
+        {
             MoveDir=transform.forward*MoveStick.ReadValue<Vector2>().y+transform.right*MoveStick.ReadValue<Vector2>().x;
             MoveDir = MoveDir.normalized;
-            
         }
 
         #endregion

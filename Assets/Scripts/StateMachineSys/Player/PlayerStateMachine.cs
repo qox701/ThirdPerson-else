@@ -2,7 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using StateMachineSys;
+using Unity.VisualScripting;
+using StateMachine = StateMachineSys.StateMachine;
 
 namespace Controller
 {
@@ -19,7 +20,7 @@ namespace Controller
         {
             base.Initialize();
             StatePool.Add("Move", new Player_Move(this));
-            //StatePool.Add("Controlled", new ControlledState(this));
+            StatePool.Add("Atk", new Player_Atk(this));
         }
         
         public override void Enable()

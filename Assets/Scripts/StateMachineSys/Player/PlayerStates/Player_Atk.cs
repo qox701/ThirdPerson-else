@@ -1,18 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using StateMachineSys;
+using UnityEngine.InputSystem;
 
-public class Player_Atk : MonoBehaviour
+namespace Controller
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Player_Atk : IState
     {
-        
-    }
+        private PlayerStateMachine _stateMachine;
+        private PlayerController _controller;
+        private GameObject _atkCollider;
+        private readonly PlayerAnimationCurve _animationCurve;
+        public Player_Atk(PlayerStateMachine stateMachine)
+        {
+            _stateMachine = stateMachine;
+            _controller=_stateMachine._playerController;
+            _animationCurve = _controller.PlayerAnimationCurve;
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
+        public void Enter()
+        {
+            _controller.Rigidbody.AddForce(_controller.MoveDir, ForceMode.Impulse);
+            _atkCollider.SetActive(true);
+        }
+        public void Update(){}
+        public void FixedUpdate(){}
+
+        public void Exit()
+        {
+            _atkCollider.SetActive(false);
+        }
+        public void DrawGizmos(){}
+        
         
     }
 }
+
