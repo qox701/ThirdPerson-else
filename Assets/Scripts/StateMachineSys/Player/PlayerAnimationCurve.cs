@@ -24,6 +24,9 @@ namespace Controller
         public float maxSpeed = 5f;
         public float RotateSpeed=10f;
 
+        public float AtkTime=0.5f;
+        public float AtkSpeed=10f;
+
         [HideInInspector]
         public bool isChangingSpeed;
         [HideInInspector]

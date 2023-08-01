@@ -29,8 +29,6 @@ namespace Controller
         #endregion
         
         #region Movement
-
-        public float MaxSpeed = 5f;
         public Vector3 MoveDir { get; private set; }
         public float LookDirValue { get; private set; }
         public Vector3 Velocity=> Rigidbody.velocity;
@@ -89,6 +87,11 @@ namespace Controller
         private void OnLook(InputAction.CallbackContext LookStick)
         {
             //Get the Look Direction Input when LookStick is performed
+            if (Mathf.Abs(LookStick.ReadValue<Vector2>().x) < 5)
+            {
+                LookDirValue = 0;
+                return;
+            }
             LookDirValue = LookStick.ReadValue<Vector2>().x;
             
             //Refresh MoveDir when LookStick is performed

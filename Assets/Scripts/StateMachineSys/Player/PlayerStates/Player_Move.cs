@@ -59,12 +59,14 @@ namespace Controller
         {
             _controller.MoveStick.started += OnMoveStart;
             _controller.MoveStick.canceled+= OnMoveCanceled;
+            _controller.AtkButton.performed += OnAtk;
         }
         
         private void RemoveInputCallbacks()
         {
             _controller.MoveStick.started -= OnMoveStart;
             _controller.MoveStick.canceled -= OnMoveCanceled;
+            _controller.AtkButton.performed -= OnAtk;
         }
         #endregion
 
@@ -77,6 +79,11 @@ namespace Controller
         private void OnMoveCanceled(InputAction.CallbackContext context)
         {
             _animationCurve.isChangingSpeed = false;
+        }
+
+        private void OnAtk(InputAction.CallbackContext context)
+        {
+            _stateMachine.TransitTo("Atk");
         }
 
         #endregion
