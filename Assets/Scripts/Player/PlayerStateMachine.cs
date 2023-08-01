@@ -21,6 +21,7 @@ namespace Controller
             base.Initialize();
             StatePool.Add("Move", new Player_Move(this));
             StatePool.Add("Atk", new Player_Atk(this));
+            StatePool.Add("Damaged", new Player_Damaged(this));
         }
         
         public override void Enable()

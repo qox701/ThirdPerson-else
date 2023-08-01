@@ -3,18 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using Utilities;
 
 namespace Controller
 {
     [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(PlayerAnimationCurve))]
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour,ICanDamaged
     {
-        
-
-        
         #region Internal Components Refs
         private PlayerInput PlayerInput { get;set; }
         private PlayerStateMachine StateMachine { get; set; }
@@ -28,13 +25,6 @@ namespace Controller
         public InputAction AtkButton { get; private set; }
         #endregion
         
-        #region Movement
-        public Vector3 MoveDir { get; private set; }
-        public float LookDirValue { get; private set; }
-        public Vector3 Velocity=> Rigidbody.velocity;
-        
-        #endregion
-
         #region MonoBehaviours
         void OnEnable()
         {
@@ -75,16 +65,21 @@ namespace Controller
         }
         #endregion
 
+        #region Movement
+        public Vector3 MoveDir { get; private set; }
+        public float LookDirValue { get; private set; }
+        public Vector3 Velocity=> Rigidbody.velocity;
         
+        #endregion
 
         #region Input Handling
-        private void OnMove(InputAction.CallbackContext MoveStick)
+        private void OnMove(InputAction.CallbackContext context)
         {
             //Get Move Direction Input when MoveStick is performed
             GetMoveDirection();
         }
         
-        private void OnLook(InputAction.CallbackContext LookStick)
+        private void OnLook(InputAction.CallbackContext context)
         {
             //Get the Look Direction Input when LookStick is performed
             if (Mathf.Abs(LookStick.ReadValue<Vector2>().x) < 5)
@@ -104,6 +99,14 @@ namespace Controller
         {
             MoveDir=transform.forward*MoveStick.ReadValue<Vector2>().y+transform.right*MoveStick.ReadValue<Vector2>().x;
             MoveDir = MoveDir.normalized;
+        }
+
+        public Vector3 DamageDir { get;private set; }
+        
+        public void OnDamaged(Vector3 damagePos)
+        {
+            DamageDir = Vector3.Normalize(transform.position - damagePos);
+            StateMachine.TransitTo("Damaged");
         }
 
         #endregion

@@ -33,16 +33,14 @@ namespace Controller
         {
             _controller.Rigidbody.AddForce(_controller.transform.forward*AtkSpeed, ForceMode.VelocityChange);
             //_atkCollider.SetActive(true);
-            Debug.Log("Atk");
             Timer=0f;
         }
         public void Update(){}
 
         public void FixedUpdate()
         {
-            
             Timer+= Time.deltaTime;
-            if (Timer >= AtkTime)
+            if (Timer >= AtkTime||_controller.Rigidbody.velocity.magnitude==0)
                 _stateMachine.TransitTo("Move");
         }
 

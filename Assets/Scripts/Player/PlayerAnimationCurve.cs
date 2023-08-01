@@ -26,6 +26,9 @@ namespace Controller
 
         public float AtkTime=0.5f;
         public float AtkSpeed=10f;
+        
+        public float DamagedTime=0.5f;
+        public float DamagedSpeed=10f;
 
         [HideInInspector]
         public bool isChangingSpeed;

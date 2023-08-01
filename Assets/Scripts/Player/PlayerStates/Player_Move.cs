@@ -84,6 +84,7 @@ namespace Controller
         private void OnAtk(InputAction.CallbackContext context)
         {
             _stateMachine.TransitTo("Atk");
+            //_controller.OnDamaged(Vector3.forward);
         }
 
         #endregion

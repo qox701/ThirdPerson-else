@@ -4,6 +4,7 @@ using Controller;
 using UnityEditor;
 using UnityEngine;
 
+
 [CustomEditor(typeof(PlayerAnimationCurve))]
 [CanEditMultipleObjects]
 public class PlayerAnimCurEditor : Editor
