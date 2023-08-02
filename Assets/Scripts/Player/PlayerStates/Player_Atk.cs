@@ -11,7 +11,7 @@ namespace Controller
         #region Refs
         private PlayerStateMachine _stateMachine;
         private PlayerController _controller;
-        //private GameObject _atkCollider;
+        private GameObject _atkCollider;
         private readonly PlayerAnimationCurve _animationCurve;
         #endregion
 
@@ -24,6 +24,7 @@ namespace Controller
             _stateMachine = stateMachine;
             _controller=_stateMachine._playerController;
             _animationCurve = _controller.PlayerAnimationCurve;
+            _atkCollider=_controller.AtkCollider;
 
             AtkTime = _animationCurve.AtkTime;
             AtkSpeed = _animationCurve.AtkSpeed;
@@ -32,7 +33,7 @@ namespace Controller
         public void Enter()
         {
             _controller.Rigidbody.AddForce(_controller.transform.forward*AtkSpeed, ForceMode.VelocityChange);
-            //_atkCollider.SetActive(true);
+            _atkCollider.SetActive(true);
             Timer=0f;
         }
         public void Update(){}
@@ -46,8 +47,7 @@ namespace Controller
 
         public void Exit()
         {
-            //_atkCollider.SetActive(false);
-            
+            _atkCollider.SetActive(false);
         }
         public void DrawGizmos(){}
         

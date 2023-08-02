@@ -17,6 +17,7 @@ namespace Controller
         private PlayerStateMachine StateMachine { get; set; }
         public Rigidbody Rigidbody { get;  set; }
         public PlayerAnimationCurve PlayerAnimationCurve { get; private set; }
+        public GameObject AtkCollider;
         #endregion
         
         #region InputActions
@@ -33,6 +34,8 @@ namespace Controller
             PlayerInput = GetComponent<PlayerInput>();
             Rigidbody= GetComponent<Rigidbody>();
             PlayerAnimationCurve = GetComponent<PlayerAnimationCurve>();
+            AtkCollider=transform.GetChild(0).gameObject;
+            AtkCollider.SetActive(false);
             
             MoveStick = PlayerInput.actions["Move"];
             LookStick = PlayerInput.actions["Look"];
