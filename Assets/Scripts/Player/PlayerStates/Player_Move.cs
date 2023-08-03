@@ -41,7 +41,6 @@ namespace Controller
             
             //Move
             _controller.Rigidbody.AddForce(_moveDirection,ForceMode.Acceleration);
-            
             _controller.Rigidbody.velocity= _moveDirection.normalized*_speed;
             
             //Rotate
@@ -84,7 +83,6 @@ namespace Controller
         private void OnAtk(InputAction.CallbackContext context)
         {
             _stateMachine.TransitTo("Atk");
-            //_controller.OnDamaged(Vector3.forward);
         }
 
         #endregion

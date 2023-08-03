@@ -32,6 +32,7 @@ namespace Controller
 
         public void Enter()
         {
+            //Move and Atk
             _controller.Rigidbody.AddForce(_controller.transform.forward*AtkSpeed, ForceMode.VelocityChange);
             _atkCollider.SetActive(true);
             Timer=0f;
@@ -40,6 +41,7 @@ namespace Controller
 
         public void FixedUpdate()
         {
+            //Start Timer
             Timer+= Time.deltaTime;
             if (Timer >= AtkTime||_controller.Rigidbody.velocity.magnitude==0)
                 _stateMachine.TransitTo("Move");
@@ -47,6 +49,7 @@ namespace Controller
 
         public void Exit()
         {
+            //Cancel the collider when exit
             _atkCollider.SetActive(false);
         }
         public void DrawGizmos(){}

@@ -20,21 +20,25 @@ namespace Controller
         private float _normalizeTime;
         #endregion
         
+        //Move data
         public float Speed { get; private set; }
         public float maxSpeed = 5f;
         public float RotateSpeed=10f;
 
+        //Atk data
         public float AtkTime=0.5f;
         public float AtkSpeed=10f;
         
+        //Damaged data
         public float DamagedTime=0.5f;
         public float DamagedSpeed=10f;
 
+        //Internal
         [HideInInspector]
         public bool isChangingSpeed;
         [HideInInspector]
         public bool isAccelerating=false;
-        //public bool isDecelerating;
+        
         Coroutine myCouroutine;
         
 
@@ -52,6 +56,7 @@ namespace Controller
                 {
                     return;
                 }
+                //Reading the acceleration curve when the player is accelerating
                 else
                 {
                     isAccelerating = true;
@@ -60,7 +65,6 @@ namespace Controller
                         StopCoroutine(myCouroutine);
                     }
                     _timer = 0;
-                    //ChangeStartSpeed();
                     myCouroutine = StartCoroutine(ChangeSpeed());
                 }
             }
@@ -70,6 +74,7 @@ namespace Controller
                 {
                     return;
                 }
+                //Reading the deceleration curve when the player is decelerating
                 else
                 {
                     isAccelerating = false;
