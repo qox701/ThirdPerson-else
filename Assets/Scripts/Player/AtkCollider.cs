@@ -13,7 +13,7 @@ namespace Utilities
         {
             if (other.GetComponent<ICanDamaged>()!=null)
             {
-                other.GetComponent<ICanDamaged>().OnDamaged();
+                other.GetComponent<ICanDamaged>().OnDamaged(this.transform.position);
             }
         }
     }

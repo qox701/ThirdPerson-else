@@ -6,7 +6,7 @@ namespace Utilities
 {
     public interface ICanDamaged
     {
-        public void OnDamaged(){}
+        public void OnDamaged(Vector3 Pos){}
     }
 }
 
