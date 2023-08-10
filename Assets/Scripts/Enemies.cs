@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;using UnityEditor;
 using UnityEngine;
 using Utilities;
+using Managers;
 
 [RequireComponent(typeof(Rigidbody))]
 
@@ -21,25 +22,27 @@ public class Enemies : MonoBehaviour,ICanDamaged
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        EventCenter.Instance.AddListener<Enemies>("EnemyCanDead",OnDead);
-        LevelMgr.Instance.enemiesList[(int)enemySerial]=this;
+        EventCenter.Instance.AddListener<int>("EnemyCanDead",OnDead);
+        
+        LevelMgr.Instance.enemiesList[(int)enemySerial]=(int)enemySerial;
     }
 
     public void OnDamaged(Vector3 Pos)
     {
         Vector3 dir = (this.transform.position - Pos).normalized;
         rb.AddForce(dir*10,ForceMode.Impulse);
-        EventCenter.Instance.EventTrigger<Enemies>("EnemyShouldDead",this);
+        EventCenter.Instance.EventTrigger<int>("EnemyShouldDead",(int)enemySerial);
     }
     
     private void Vanish()
     {
+        EventCenter.Instance.RemoveListener<int>("EnemyCanDead",OnDead);
         Destroy(this.gameObject);
     }
 
-    public void OnDead(Enemies enemy)
+    public void OnDead(int value)
     {
-        if(enemy.enemySerial==enemySerial)
+        if(value==(int)enemySerial)
             Vanish();
     }
 }

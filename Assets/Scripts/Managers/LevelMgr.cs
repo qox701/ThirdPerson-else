@@ -3,31 +3,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utilities;
-    
-public class LevelMgr : MonoBehaviour
+
+namespace Managers
 {
-    private static LevelMgr _instance;
-    public static LevelMgr Instance => _instance;
-
-    private void Awake()
+    public class LevelMgr : MonoBehaviour
     {
-        _instance = this;
-    }
-    
-    public List<Enemies> enemiesList=new List<Enemies>();
-    private int countNum=0;
+        private static LevelMgr _instance;
+        public static LevelMgr Instance => _instance;
 
-    private void Start()
-    {
-        EventCenter.Instance.AddListener<Enemies>("EnemyShouldDead",OnEnemyDead);
-    }
-
-    public void OnEnemyDead(Enemies enemy)
-    {
-        if (enemy.enemySerial==enemiesList[countNum].enemySerial)
+        private void Awake()
         {
-            EventCenter.Instance.EventTrigger<Enemies>("EnemyCanDead",enemy);
-            countNum++;
+            _instance = this;
+        }
+
+        public List<int> enemiesList = new List<int>();
+        private int countNum = 0;
+
+        private void Start()
+        {
+            EventCenter.Instance.AddListener<int>("EnemyShouldDead", OnEnemyDead);
+            
+            UIMgr.Instance.ShowPanel<BeginPanel>("BeginPanel", E_UI_Layer.Mid, null);
+        }
+
+        public void OnEnemyDead(int value)
+        {
+            if (value == enemiesList[countNum])
+            {
+                EventCenter.Instance.EventTrigger<int>("EnemyCanDead", value);
+                countNum++;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            EventCenter.Instance.RemoveListener<int>("EnemyShouldDead", OnEnemyDead);
         }
     }
 }
