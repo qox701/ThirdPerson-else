@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utilities;
+using UI;
 
 namespace Managers
 {
@@ -24,6 +25,7 @@ namespace Managers
             EventCenter.Instance.AddListener<int>("EnemyShouldDead", OnEnemyDead);
             
             UIMgr.Instance.ShowPanel<BeginPanel>("BeginPanel", E_UI_Layer.Mid, null);
+            Time.timeScale= 0;
         }
 
         public void OnEnemyDead(int value)

@@ -36,6 +36,7 @@ public class Enemies : MonoBehaviour,ICanDamaged
     
     private void Vanish()
     {
+        EventCenter.Instance.EventTrigger("SwitchIcon");
         EventCenter.Instance.RemoveListener<int>("EnemyCanDead",OnDead);
         Destroy(this.gameObject);
     }
